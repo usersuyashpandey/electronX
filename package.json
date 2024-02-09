@@ -1,0 +1,63 @@
+{
+  "name": "xecta-app",
+  "productName": "Xecta App",
+  "version": "0.0.1",
+  "description": "Xecta App description",
+  "main": ".vite/build/main.js",
+  "repository": "https://github.com/usersuyashpandey/electronX",
+  "scripts": {
+    "start": "electron-forge start",
+    "start:web": "vite --open",
+    "start:both": "run-p start:web start",
+    "build": "tsc && vite build",
+    "package": "electron-forge package",
+    "make:win": "electron-forge make --arch=x64 --platform=win32",
+    "make:win32": "electron-forge make --arch=ia32 --platform=win32",
+    "make:mac": "electron-forge make --platform=darwin --arch=x64 --targets=dmg",
+    "make:linux": "electron-forge make --arch=x64 --platform=linux",
+    "make": "electron-forge make",
+    "make:all": "run-s make:mac make:win make:win32 make:linux",
+    "publish": "electron-forge publish",
+    "lint": "eslint --ext .ts,.tsx ."
+  },
+  "keywords": [],
+  "author": {
+    "name": "usersuyashpandey",
+    "email": "suyashpandey152@gmail.com"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@electron-forge/cli": "^7.2.0",
+    "@electron-forge/maker-deb": "^7.2.0",
+    "@electron-forge/maker-dmg": "^7.2.0",
+    "@electron-forge/maker-rpm": "^7.2.0",
+    "@electron-forge/maker-squirrel": "^7.2.0",
+    "@electron-forge/maker-zip": "^7.2.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.2.0",
+    "@electron-forge/plugin-vite": "^7.2.0",
+    "@electron-forge/publisher-github": "^7.2.0",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "electron": "28.2.2",
+    "eslint": "^8.56.0",
+    "eslint-plugin-import": "^2.29.1",
+    "npm-run-all": "^4.1.5",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.3.3"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "5.15.9",
+    "@mui/material": "5.15.9",
+    "electron-squirrel-startup": "^1.0.0",
+    "highcharts": "^11.3.0",
+    "highcharts-react-official": "^3.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.0",
+    "update-electron-app": "^3.0.0"
+  }
+}
