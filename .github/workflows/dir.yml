@@ -1,4 +1,4 @@
-name: Find .exe File
+name: Find Out Directory
 
 on:
   push:
@@ -13,7 +13,18 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Print directory structure
+      - name: Find Out Directory
         run: |
-          echo "Directory structure:"
-          ls -R
+          # Debugging: Print the contents of the directory
+          Get-ChildItem -Recurse | Format-Table
+
+          # Search for the 'out' directory under the specified path using PowerShell
+          $outDirectory = Get-ChildItem -Recurse -Path 'Directory: D:\a\electronX\electronX' -Filter 'out' | Where-Object { $_.PSIsContainer -and $_.Name -eq 'out' } | Select-Object -ExpandProperty FullName
+
+          if ($outDirectory -ne $null) {
+            Write-Host "Found 'out' directory at: $outDirectory"
+          } else {
+            Write-Host "Could not find 'out' directory."
+          }
+
+    # Add more steps or actions as needed for your workflow
