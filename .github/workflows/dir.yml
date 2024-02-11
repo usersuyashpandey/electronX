@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  find-exe:
+  find-out-directory:
     runs-on: windows-latest
 
     steps:
