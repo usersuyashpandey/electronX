@@ -42,7 +42,7 @@ jobs:
           draft: true
           prerelease: false
           token: ${{ secrets.GH_TOKEN }}
-          files: "C:\\a\\xectaApps\\xectaApps\\out\\make\\*.exe"
+          files: "C:\\a\\electronX\\electronX\\out\\make\\*.exe"
 
   build_mac:
     runs-on: macos-latest
@@ -82,4 +82,4 @@ jobs:
           draft: true
           prerelease: false
           token: ${{ secrets.GH_TOKEN }}
-          files: "/Users/runner/work/xectaApps/xectaApps/out/make/*.dmg"
+          files: "/Users/runner/work/electronX/electronX/out/make/*.dmg"
