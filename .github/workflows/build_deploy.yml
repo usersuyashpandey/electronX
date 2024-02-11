@@ -15,4 +15,4 @@ jobs:
 
       - name: List Folders and Subfolders
         run: |
-          Get-ChildItem -Path 'D:\a\electronX\electronX\out' -Recurse -Directory | ForEach-Object { $_.FullName }
+          Get-ChildItem -Path 'D:\a\electronX\electronX' -Recurse -Directory | ForEach-Object { $_.FullName }
