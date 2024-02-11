@@ -20,6 +20,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Get Project Version
+        id: get_version
+        run: echo ::set-output name=version::$(node -p "require('./package.json').version")
+
       - name: Build application for Windows
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -29,6 +33,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run publish
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "XectaDigitalLab/Release"
+          tag_name: v${{ steps.get_version.outputs.version }}
+          draft: true
+          prerelease: false
+          token: ${{ secrets.GH_TOKEN }}
+          files: "C:\\a\\xectaApps\\xectaApps\\out\\make\\*.exe"
 
   build_mac:
     runs-on: macos-latest
@@ -46,6 +60,10 @@ jobs:
           python3 -m pip install setuptools
           npm ci
 
+      - name: Get Project Version
+        id: get_version
+        run: echo ::set-output name=version::$(node -p "require('./package.json').version")
+
       - name: Build application for macOS
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -55,3 +73,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run publish
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "usersuyashpandey/Release"
+          tag_name: v${{ steps.get_version.outputs.version }}
+          draft: true
+          prerelease: false
+          token: ${{ secrets.GH_TOKEN }}
+          files: "/Users/runner/work/xectaApps/xectaApps/out/make/*.dmg"
