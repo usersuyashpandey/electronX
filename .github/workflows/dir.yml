@@ -18,13 +18,19 @@ jobs:
         # Debugging: Print the contents of the directory
         Get-ChildItem -Recurse | Format-Table
 
-        # Search for .exe files under the specified path using PowerShell
-        $exeArtifact = Get-ChildItem -Recurse -Path 'D:\a\electronX\electronX\out\make' -Filter '*.exe' | Select-Object -ExpandProperty FullName
+        # Check if the directory exists
+        $outDirectory = 'D:\a\electronX\electronX\out\make'
+        if (Test-Path $outDirectory -PathType Container) {
+          # Search for .exe files under the specified path using PowerShell
+          $exeArtifact = Get-ChildItem -Recurse -Path $outDirectory -Filter '*.exe' | Select-Object -ExpandProperty FullName
 
-        if ($exeArtifact -ne $null) {
-          Write-Host "Found EXE artifact at: $exeArtifact"
+          if ($exeArtifact -ne $null) {
+            Write-Host "Found EXE artifact at: $exeArtifact"
+          } else {
+            Write-Host "Could not find EXE artifact."
+          }
         } else {
-          Write-Host "Could not find EXE artifact."
+          Write-Host "Directory $outDirectory does not exist."
         }
 
     # Add more steps or actions as needed for your workflow
