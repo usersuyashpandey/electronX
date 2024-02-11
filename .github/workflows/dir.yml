@@ -1,4 +1,4 @@
-name: Check Directory Structure
+name: Check C Drive Folder Structure
 
 on:
   push:
@@ -6,16 +6,16 @@ on:
       - main
 
 jobs:
-  check-directory:
+  check-c-drive:
     runs-on: windows-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Check Directory Structure
+      - name: Check C Drive Folder Structure
         run: |
-          # Print the directory structure using PowerShell
-          Get-ChildItem 'C:\a\electronX' -Recurse | Format-Table
+          # Print the folder structure of the C drive using PowerShell
+          Get-ChildItem 'C:\' -Recurse | Where-Object { $_.PSIsContainer } | Format-Table
 
     # Add more steps or actions as needed for your workflow
