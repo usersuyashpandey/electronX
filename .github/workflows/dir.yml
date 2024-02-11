@@ -1,0 +1,21 @@
+name: Check Directory Structure
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check-directory:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Check Directory Structure
+        run: |
+          # Print the directory structure using PowerShell
+          Get-ChildItem 'C:\a\electronX' -Recurse | Format-Table
+
+    # Add more steps or actions as needed for your workflow
