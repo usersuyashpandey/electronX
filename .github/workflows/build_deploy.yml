@@ -1,4 +1,4 @@
-name: List Folders and Subfolders
+name: Build and Release
 
 on:
   push:
@@ -34,6 +34,52 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run publish
 
-      - name: List Folders and Subfolders
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "XectaDigitalLab/Release"
+          tag_name: v${{ steps.get_version.outputs.version }}
+          draft: true
+          prerelease: false
+          token: ${{ secrets.GH_TOKEN }}
+          files: "D:/a/electronX/electronX/out/make/squirrel.windows/x64*.exe"
+
+  build_mac:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+
+      - name: Install dependencies
         run: |
-          Get-ChildItem -Path 'D:\a\electronX\electronX\out\make\squirrel.windows\x64' -Recurse -Directory | ForEach-Object { $_.FullName }
+          python3 -m pip install setuptools
+          npm ci
+
+      - name: Get Project Version
+        id: get_version
+        run: echo ::set-output name=version::$(node -p "require('./package.json').version")
+
+      - name: Build application for macOS
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run make:mac
+
+      - name: Publish application
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run publish
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "usersuyashpandey/Release"
+          tag_name: v${{ steps.get_version.outputs.version }}
+          draft: true
+          prerelease: false
+          token: ${{ secrets.GH_TOKEN }}
+          files: "/Users/runner/work/electronX/electronX/out/make/*.dmg"
