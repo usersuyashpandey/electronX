@@ -1,4 +1,4 @@
-name: Find .exe File
+name: Find Out Directory
 
 on:
   push:
@@ -6,22 +6,25 @@ on:
       - main
 
 jobs:
-  find-exe:
+  find-out-directory:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Find .exe File
-        run: |
-          # Search for the .exe file using PowerShell
-          $exePath = Get-ChildItem -Recurse -Filter 'Xecta-App-0.0.3-Setup.exe' | Select-Object -ExpandProperty FullName
+    - name: Find Out Directory
+      run: |
+        # Debugging: Print the contents of the directory
+        Get-ChildItem -Recurse | Format-Table
 
-          if ($exePath -ne $null) {
-            Write-Host "Found .exe file at: $exePath"
-          } else {
-            Write-Host "Could not find the .exe file."
-          }
+        # Search for the 'out' directory using PowerShell
+        $outDirectory = Get-ChildItem -Recurse -Filter 'out' | Where-Object { $_.PSIsContainer -and $_.Name -eq 'out' } | Select-Object -ExpandProperty FullName
+
+        if ($outDirectory -ne $null) {
+          Write-Host "Found 'out' directory at: $outDirectory"
+        } else {
+          Write-Host "Could not find 'out' directory."
+        }
 
     # Add more steps or actions as needed for your workflow
