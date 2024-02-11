@@ -1,4 +1,4 @@
-name: Check C Drive Folder Structure
+name: Find Xecta-App-Setup.exe
 
 on:
   push:
@@ -6,16 +6,22 @@ on:
       - main
 
 jobs:
-  check-c-drive:
+  find-exe:
     runs-on: windows-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Check C Drive Folder Structure
+      - name: Find Xecta-App-Setup.exe
         run: |
-          # Print the folder structure of the C drive using PowerShell
-          Get-ChildItem 'C:\' -Recurse | Where-Object { $_.PSIsContainer } | Format-Table
+          # Search for the Xecta-App-Setup.exe file using PowerShell with a wildcard
+          $exePath = Get-ChildItem -Recurse -Filter 'Xecta-App-*-Setup.exe' | Select-Object -ExpandProperty FullName
+
+          if ($exePath -ne $null) {
+            Write-Host "Found Xecta-App-Setup.exe at: $exePath"
+          } else {
+            Write-Host "Could not find Xecta-App-Setup.exe."
+          }
 
     # Add more steps or actions as needed for your workflow
