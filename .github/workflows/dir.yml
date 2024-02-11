@@ -19,7 +19,7 @@ jobs:
           Get-ChildItem -Recurse | Format-Table
 
           # Search for the 'out' directory under the specified path using PowerShell
-          $outDirectory = Get-ChildItem -Recurse -Path 'Directory: D:\a\electronX\electronX' -Filter 'out' | Where-Object { $_.PSIsContainer -and $_.Name -eq 'out' } | Select-Object -ExpandProperty FullName
+          $outDirectory = Get-ChildItem -Recurse -Path 'D:\a\electronX\electronX' -Filter 'out' | Where-Object { $_.PSIsContainer -and $_.Name -eq 'out' } | Select-Object -ExpandProperty FullName
 
           if ($outDirectory -ne $null) {
             Write-Host "Found 'out' directory at: $outDirectory"
