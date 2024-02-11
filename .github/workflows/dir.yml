@@ -1,4 +1,4 @@
-name: Find Out Directory
+name: Find EXE Artifact
 
 on:
   push:
@@ -6,25 +6,25 @@ on:
       - main
 
 jobs:
-  find-out-directory:
+  find-exe-artifact:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Find Out Directory
-        run: |
-          # Debugging: Print the contents of the directory
-          Get-ChildItem -Recurse | Format-Table
+    - name: Find EXE Artifact
+      run: |
+        # Debugging: Print the contents of the directory
+        Get-ChildItem -Recurse | Format-Table
 
-          # Search for the 'out' directory under the specified path using PowerShell
-          $outDirectory = Get-ChildItem -Recurse -Path 'D:\a\electronX\electronX' -Filter 'out' | Where-Object { $_.PSIsContainer -and $_.Name -eq 'out' } | Select-Object -ExpandProperty FullName
+        # Search for .exe files under the specified path using PowerShell
+        $exeArtifact = Get-ChildItem -Recurse -Path 'D:\a\electronX\electronX\out\make' -Filter '*.exe' | Select-Object -ExpandProperty FullName
 
-          if ($outDirectory -ne $null) {
-            Write-Host "Found 'out' directory at: $outDirectory"
-          } else {
-            Write-Host "Could not find 'out' directory."
-          }
+        if ($exeArtifact -ne $null) {
+          Write-Host "Found EXE artifact at: $exeArtifact"
+        } else {
+          Write-Host "Could not find EXE artifact."
+        }
 
     # Add more steps or actions as needed for your workflow
