@@ -34,15 +34,15 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run publish
 
-      # - name: Release
-      #   uses: softprops/action-gh-release@v1
-      #   with:
-      #     repository: "XectaDigitalLab/Release"
-      #     tag_name: v${{ steps.get_version.outputs.version }}
-      #     draft: true
-      #     prerelease: false
-      #     token: ${{ secrets.GH_TOKEN }}
-      #     files: "C:\\a\\electronX\\electronX\\out\\make\\*.exe"
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "XectaDigitalLab/Release"
+          tag_name: v${{ steps.get_version.outputs.version }}
+          draft: true
+          prerelease: false
+          token: ${{ secrets.GH_TOKEN }}
+          files: "D:/a/electronX/electronX/out/make/*.exe"
 
   build_mac:
     runs-on: macos-latest
