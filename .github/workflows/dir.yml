@@ -1,4 +1,4 @@
-name: Find Xecta-App-Setup.exe
+name: Find .exe File
 
 on:
   push:
@@ -13,15 +13,5 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Find Xecta-App-Setup.exe
-        run: |
-          # Search for the Xecta-App-Setup.exe file using PowerShell with a wildcard
-          $exePath = Get-ChildItem -Recurse -Filter 'Xecta-App-*-Setup.exe' | Select-Object -ExpandProperty FullName
-
-          if ($exePath -ne $null) {
-            Write-Host "Found Xecta-App-Setup.exe at: $exePath"
-          } else {
-            Write-Host "Could not find Xecta-App-Setup.exe."
-          }
-
-    # Add more steps or actions as needed for your workflow
+      - name: Print directory structure
+        uses: FiorelaCiroku/XDTesting-Print-Directory-Structure@v1.0.2
