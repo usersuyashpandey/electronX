@@ -42,7 +42,7 @@ jobs:
           draft: true
           prerelease: false
           token: ${{ secrets.GH_TOKEN }}
-          files: "D:/a/electronX/electronX/out/make/squirrel.windows/x64*.exe"
+          files: "D:/a/electronX/electronX/out/make/squirrel.windows/x64/*.exe"
 
   build_mac:
     runs-on: macos-latest
