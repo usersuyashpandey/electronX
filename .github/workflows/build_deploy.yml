@@ -17,17 +17,17 @@ jobs:
         with:
           node-version: 20.x
 
-      - name: Install dependencies
-        run: npm ci
+      # - name: Install dependencies
+      #   run: npm ci
 
       - name: Get Project Version
         id: get_version
         run: echo ::set-output name=version::$(node -p "require('./package.json').version")
 
-      - name: Build application for Windows
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run make:win
+      # - name: Build application for Windows
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      #   run: npm run make:win
 
       - name: Publish application
         env:
@@ -36,8 +36,4 @@ jobs:
 
       - name: List Folders and Subfolders
         run: |
-          Get-ChildItem -Path 'D:\a\electronX\electronX\out\make\' -Recurse -Directory | ForEach-Object { $_.FullName }
-
-      - name: List Folders and Subfolders
-        run: |
-          Get-ChildItem -Path 'D:\a\electronX\electronX' -Recurse -Directory | ForEach-Object { $_.FullName }
+          Get-ChildItem -Path 'D:\a\electronX\electronX\out\make\squirrel.windows\x64' -Recurse -Directory | ForEach-Object { $_.FullName }
