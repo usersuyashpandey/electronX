@@ -38,15 +38,8 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
-          files: out/*.*
+          files: 'D:\a\electronX\electronX\out\make\*.exe'
           draft: true
           repository: "XectaDigitalLab/Release"
-          env:
-            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-      - name: Upload Nightly Build
-        uses: actions/upload-artifact@v2
-        if: success()
-        with:
-          name: <App name>-nightly
-          path: out/**/*!(.zip)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
