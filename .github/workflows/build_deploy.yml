@@ -41,8 +41,8 @@ jobs:
           files: out/*.*
           draft: true
           repository: "XectaDigitalLab/Release"
-          env:
-            GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Upload Nightly Build
         uses: actions/upload-artifact@v2
