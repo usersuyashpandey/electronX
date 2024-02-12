@@ -38,7 +38,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ github.ref }}
-          files: 'D:\a\electronX\electronX\out\make\*.exe'
+          files: "./out/Xecta App-win32-x64/*.exe"
           draft: true
           repository: "XectaDigitalLab/Release"
         env:
