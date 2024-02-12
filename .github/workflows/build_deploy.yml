@@ -37,7 +37,7 @@ jobs:
       - name: Upload builds to release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.get_version.outputs.version }}
+          tag_name: "v0.0.5"
           files: "./out/Xecta App-win32-x64/*.exe"
           draft: true
           repository: "XectaDigitalLab/Release"
