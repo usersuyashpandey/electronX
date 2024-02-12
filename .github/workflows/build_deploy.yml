@@ -11,42 +11,45 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          persist-credentials: false
-          fetch-depth: 0
+          node-version: 20.x
 
-      - name: Preserve out/make directory
-        run: |
-          # Move the contents of the preserved directory back to its original location
-          mv ./out/make/* D:/a/electronX/electronX/out/make/
+      - name: Install dependencies
+        run: npm ci
 
-      # - name: Set up Node.js
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: 20.x
+      - name: Get Project Version
+        id: get_version
+        run: echo ::set-output name=version::$(node -p "require('./package.json').version")
 
-      # - name: Install dependencies
-      #   run: npm ci
+      - name: Build application for Windows
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run make:win
 
-      # - name: Get Project Version
-      #   id: get_version
-      #   run: echo ::set-output name=version::$(node -p "require('./package.json').version")
+      - name: Publish application
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: npm run publish
+      
+        - name: Upload builds to release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref }}
+          files: out/*.*
+          draft: true
+          repository: "XectaDigitalLab/Release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
-      # - name: Build application for Windows
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      #   run: npm run make:win
-
-      # - name: Publish application
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-      #   run: npm run publish
-
-      # - name: Upload build artifacts
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: win-build-artifacts
-      #     path: electronX/out/**/*
+      - name: Upload Nightly Build
+        uses: actions/upload-artifact@v2
+        if: success()
+        with:
+          name: <App name>-nightly
+          path: out/**/*!(.zip)
 
       # - name: Release
       #   uses: softprops/action-gh-release@v1
