@@ -9,8 +9,8 @@ jobs:
   build_windows:
     runs-on: windows-latest
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       # - name: Set up Node.js
       #   uses: actions/setup-node@v4
@@ -36,7 +36,7 @@ jobs:
 
       - name: Check if the file exists
         id: check-file
-        run: test -f "D:/a/electronX/electronX/out/make/squirrel.windows/x64/Xecta App-0.0.10 Setup.exe"
+        run: test -f "D:/a/electronX/electronX/out/make"
 
       - name: Upload builds to release
         uses: softprops/action-gh-release@v1
