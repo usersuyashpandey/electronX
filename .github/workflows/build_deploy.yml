@@ -29,10 +29,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run make:win
 
-      - name: Publish application
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run publish
+      # - name: Publish application
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      #   run: npm run publish
 
       - name: Upload Windows Setup to Release
         uses: softprops/action-gh-release@v1
