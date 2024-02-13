@@ -78,5 +78,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           files: |
-            /Users/runner/work/electronX/electronX/out/make*.dmg
+            /Users/runner/work/electronX/electronX/out/make/*.dmg
           tag_name: v${{ env.npm_package_version }}
