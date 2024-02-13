@@ -37,8 +37,8 @@ jobs:
       - name: Upload builds to release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.get_version.outputs.version }}
-          files: "D:/a/electronX/electronX/out/make/squirrel.windows/x64/Xecta App-${{steps.get_version.outputs.version}} Setup.exe"
+          tag_name: v0.0.10
+          files: "D:/a/electronX/electronX/out/make/squirrel.windows/x64/Xecta App-0.0.10 Setup.exe"
           draft: true
           repository: "XectaDigitalLab/Release"
         env:
