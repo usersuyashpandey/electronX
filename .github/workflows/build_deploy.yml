@@ -31,5 +31,5 @@ jobs:
           curl -X POST \
             -H "Authorization: Bearer $GITHUB_TOKEN" \
             -H "Content-Type: application/octet-stream" \
-            --data-binary @out/make/squirrel.windows/x64/Xecta-App-0.0.10-Setup.exe \
+            --data-binary "@out/make/squirrel.windows/x64/Xecta-App-0.0.10-Setup.exe" \
             "https://uploads.github.com/repos/usersuyashpandey/Release/releases/12345678/assets?name=Xecta-App-0.0.10-Setup.exe"
