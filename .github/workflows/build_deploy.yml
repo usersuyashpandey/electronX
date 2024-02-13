@@ -73,13 +73,10 @@ jobs:
           git config --global user.email "suyashpandey152@gmail.com"
           git config --global user.name "usersuyashpandey"
 
-      - name: Create Git tag
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: git tag -a v${{ env.npm_package_version }} -m "Release version v${{ env.npm_package_version }}"
-
-      - name: Push Git tag
-        run: git push origin v${{ env.npm_package_version }}
+      - name: Force-push tag
+        run: |
+          git tag -f -a v${{ env.npm_package_version }} -m "Release version v${{ env.npm_package_version }}"
+          git push -f origin v${{ env.npm_package_version }}
 
       - name: Debug Directory Structure
         run: |
