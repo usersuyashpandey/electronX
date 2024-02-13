@@ -38,7 +38,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ steps.get_version.outputs.version }}
-          files: out/*.*
+          files: out/Xecta App-win32-x64/*.exe
           draft: true
           repository: "XectaDigitalLab/Release"
         env:
