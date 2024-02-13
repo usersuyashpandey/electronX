@@ -26,7 +26,7 @@ jobs:
 
       - name: Check if Release Already Exists
         id: check_release
-        run: echo ::set-output name=exists::$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" "https://api.github.com/repos/XectaDigitalLab/Release/releases/tags/v${{ steps.get_version.outputs.version }}" )
+        run: echo ::set-output name=exists::$(curl -s -o /dev/null -w "%{http_code}" -H "Authorization: Bearer ${{ secrets.GH_TOKEN }}" "https://api.github.com/repos/XectaDigitalLab/Release/releases/tags/v${{ steps.get_version.outputs.version }}")
 
       - name: Create or Update GitHub Release
         run: |
