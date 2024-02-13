@@ -30,13 +30,13 @@ jobs:
             curl -X POST `
               -H "Authorization: $env:GITHUB_TOKEN" `
               -H "Accept: application/vnd.github.v3+json" `
-              "https://api.github.com/repos/XectaDigitalLab/Release/releases" `
+              "https://api.github.com/repos/electronX/Release/releases" `
               -d '{"tag_name": "v$env:VERSION", "draft": false, "prerelease": false}'
           } else {
             curl -X PATCH `
               -H "Authorization: $env:GITHUB_TOKEN" `
               -H "Accept: application/vnd.github.v3+json" `
-              "https://api.github.com/repos/XectaDigitalLab/Release/releases/tags/v$env:VERSION" `
+              "https://api.github.com/repos/electronX/Release/releases/tags/v$env:VERSION" `
               -d '{"tag_name": "v$env:VERSION", "draft": false, "prerelease": false}'
           }
 
