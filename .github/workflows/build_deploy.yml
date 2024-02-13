@@ -6,8 +6,20 @@ on:
       - main
 
 jobs:
+  configure-git:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure Git user
+        run: |
+          git config --global user.email "suyashpandey152@gmail.com"
+          git config --global user.name "usersuyashpandey"
+
   build-windows:
     runs-on: windows-latest
+    permissions:
+      contents: write
+      discussions: write
+    needs: configure-git
 
     steps:
       - name: Checkout repository
@@ -24,8 +36,21 @@ jobs:
       - name: Build Electron app for Windows
         run: npm run make:win
 
+      - name: Release to GitHub
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        with:
+          files: |
+            D:/a/electronX/electronX/out/make/squirrel.windows/x64/*.exe
+          tag_name: v${{ env.npm_package_version }}
+
   build-macos:
     runs-on: macos-latest
+    permissions:
+      contents: write
+      discussions: write
+    needs: configure-git
 
     steps:
       - name: Checkout repository
@@ -47,47 +72,11 @@ jobs:
       - name: Build Electron app for macOS
         run: npm run make:mac
 
-  release:
-    needs:
-      - build-windows
-      - build-macos
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      discussions: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Configure Git user
-        run: |
-          git config --global user.email "suyashpandey152@gmail.com"
-          git config --global user.name "usersuyashpandey"
-
-      - name: Force-push tag
-        run: |
-          git tag -f -a v${{ env.npm_package_version }} -m "Release version v${{ env.npm_package_version }}"
-          git push -f origin v${{ env.npm_package_version }}
-
-      - name: Debug Directory Structure
-        run: |
-          ls -R
-
       - name: Release to GitHub
         uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           files: |
-            D:\a\electronX\electronX\out\make*.exe
             /Users/runner/work/electronX/electronX/out/make*.dmg
           tag_name: v${{ env.npm_package_version }}
