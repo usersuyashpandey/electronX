@@ -81,6 +81,10 @@ jobs:
       - name: Push Git tag
         run: git push origin v${{ env.npm_package_version }}
 
+      - name: Debug Directory Structure
+        run: |
+          ls -R
+
       - name: Release to GitHub
         uses: softprops/action-gh-release@v1
         env:
