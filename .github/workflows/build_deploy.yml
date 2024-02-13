@@ -36,7 +36,7 @@ jobs:
 
       - name: Check if the file exists
         id: check-file
-        run: test -f "D:/a/electronX/electronX/out/make"
+        run: test -f "D:/a/electronX/electronX"
 
       - name: Upload builds to release
         uses: softprops/action-gh-release@v1
