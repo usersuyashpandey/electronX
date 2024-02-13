@@ -27,7 +27,7 @@ jobs:
       - name: Build application for Windows
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        run: npm run make:win32
+        run: npm run make:win
 
       - name: Publish application
         env:
