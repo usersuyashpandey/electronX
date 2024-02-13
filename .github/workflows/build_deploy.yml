@@ -34,6 +34,10 @@ jobs:
       #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       #   run: npm run publish
 
+      - name: Check if the file exists
+        id: check-file
+        run: test -f "D:/a/electronX/electronX/out/make/squirrel.windows/x64/Xecta App-0.0.10 Setup.exe"
+
       - name: Upload builds to release
         uses: softprops/action-gh-release@v1
         with:
