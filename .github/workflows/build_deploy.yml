@@ -87,6 +87,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
         with:
           files: |
-            ./out/make/*/*.exe
-            ./out/make/*/*.dmg
+            ./out/make/**/*.exe
+            ./out/make/**/*.dmg
           tag_name: v${{ env.npm_package_version }}
