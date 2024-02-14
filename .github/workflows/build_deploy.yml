@@ -32,6 +32,11 @@ jobs:
           git checkout main
           git merge --ff-only HEAD@{1}
 
+      - name: Push merged changes
+        run: git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
   build-windows:
     runs-on: windows-latest
     permissions:
