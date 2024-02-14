@@ -16,10 +16,10 @@ jobs:
         run: |
           git config --global user.email "suyashpandey152@gmail.com"
           git config --global user.name "usersuyashpandey"
-          version=$(node -p "require('./package.json').version")
-          npm version patch
-          echo "::set-output name=version::${version}"
-        shell: bash
+          npm version patch -m "Automatic version bump to %s [skip ci]"
+          git push origin HEAD:main --tags
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
   build-windows:
     runs-on: windows-latest
@@ -78,9 +78,6 @@ jobs:
 
       - name: Build Electron app for macOS
         run: npm run make:mac
-      
-      - name: Print Version
-        run: echo: ${{ needs.configure-git.outputs.version }}
 
       - name: Release to GitHub
         uses: softprops/action-gh-release@v1
