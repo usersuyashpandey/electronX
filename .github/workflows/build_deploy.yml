@@ -37,6 +37,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      - name: Pull latest changes
+        run: git pull origin main
+
   build-windows:
     runs-on: windows-latest
     permissions:
