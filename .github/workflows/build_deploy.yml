@@ -70,6 +70,8 @@ jobs:
           files: |
             D:/a/electronX/electronX/out/make/squirrel.windows/x64/*.exe
           tag_name: v${{ needs.configure-git.outputs.package.version }}
+          overwrite: true
+          repository: usersuyashpandey/Release
 
   build-macos:
     runs-on: macos-latest
@@ -107,3 +109,4 @@ jobs:
             /Users/runner/work/electronX/electronX/out/make/*.dmg
           tag_name: v${{ needs.configure-git.outputs.package.version }}
           overwrite: true
+          repository: usersuyashpandey/Release
