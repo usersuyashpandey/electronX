@@ -17,9 +17,8 @@ jobs:
           git config --global user.email "suyashpandey152@gmail.com"
           git config --global user.name "usersuyashpandey"
 
-      - name: Get package version
-        id: package
-        run: echo "::set-output name=version::$(node -p "require('./package.json').version")"
+      - name: Bump version
+        run: npm version patch
         shell: bash
 
   build-windows:

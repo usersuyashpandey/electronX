@@ -4,7 +4,10 @@
   "version": "0.0.18",
   "description": "Xecta App description",
   "main": ".vite/build/main.js",
-  "repository": "https://github.com/usersuyashpandey/electronX",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usersuyashpandey/electronX"
+  },
   "scripts": {
     "start": "electron-forge start",
     "start:web": "vite --open",
