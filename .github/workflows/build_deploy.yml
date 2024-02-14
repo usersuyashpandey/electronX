@@ -68,7 +68,7 @@ jobs:
         with:
           files: |
             D:/a/electronX/electronX/out/make/squirrel.windows/x64/*.exe
-          tag_name: v${{ needs.configure-git.outputs.package.version }}
+          tag_name: Releases
           overwrite: true
           repository: usersuyashpandey/Release
 
@@ -106,6 +106,6 @@ jobs:
         with:
           files: |
             /Users/runner/work/electronX/electronX/out/make/*.dmg
-          tag_name: v${{ needs.configure-git.outputs.package.version }}
+          tag_name: Releases
           overwrite: true
           repository: usersuyashpandey/Release
