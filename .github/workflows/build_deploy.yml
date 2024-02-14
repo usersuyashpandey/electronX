@@ -80,7 +80,7 @@ jobs:
         run: npm run make:mac
       
       - name: Print Version
-        run: echo "Version: ${{ needs.configure-git.outputs.version }}"
+        run: echo: ${{ needs.configure-git.outputs.version }}
 
       - name: Release to GitHub
         uses: softprops/action-gh-release@v1
