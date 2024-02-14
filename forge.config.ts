@@ -10,6 +10,7 @@ const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
     prune: true,
+    appVersion: process.env.npm_package_version,
   },
   rebuildConfig: {},
   makers: [
