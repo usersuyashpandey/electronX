@@ -9,6 +9,9 @@ jobs:
   configure-git:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Configure Git user
         run: |
           git config --global user.email "suyashpandey152@gmail.com"
