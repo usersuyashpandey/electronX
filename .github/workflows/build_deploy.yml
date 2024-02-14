@@ -24,6 +24,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      - name: Print package version
+        run: echo "Package version: $(node -p "require('./package.json').version")"
+
   build-windows:
     runs-on: windows-latest
     permissions:
