@@ -15,31 +15,21 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure Git user
+      - name: Configure Git user and bump version
         run: |
           git config --global user.email "suyashpandey152@gmail.com"
           git config --global user.name "usersuyashpandey"
+          npm version patch -m "Automatic version bump to %s [skip ci]"
+          echo "${version}"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Extract version
         id: version
         run: |
-          OLD_VERSION=$(npm show . version)
           NEW_VERSION=$(node -p 'require("./package.json").version')
-          if [ "$NEW_VERSION" != "$OLD_VERSION" ]; then
-            echo "New version $NEW_VERSION detected"
-            echo "version=$NEW_VERSION" >> $GITHUB_ENV
-          else
-            echo "Version $OLD_VERSION hasn't changed, skipping the release"
-            echo "version=" >> $GITHUB_ENV
-          fi
-
-      - name: Create a git tag
-        if: env.NEW_VERSION
-        run: |
-          git tag v${NEW_VERSION}
-          git push --tags
-        env:
-          NEW_VERSION: ${{ env.NEW_VERSION }}
+          echo "version=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Merge version bump commit
         run: |
@@ -55,77 +45,77 @@ jobs:
       - name: Pull latest changes
         run: git pull origin main
 
-  build-windows:
-    runs-on: windows-latest
-    permissions:
-      contents: write
-      discussions: write
-    needs: configure-git
+  # build-windows:
+  #   runs-on: windows-latest
+  #   permissions:
+  #     contents: write
+  #     discussions: write
+  #   needs: configure-git
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20.x
 
-      - name: Pull latest changes
-        run: git pull origin main
+  #     - name: Pull latest changes
+  #       run: git pull origin main
 
-      - name: Install dependencies
-        run: npm install
+  #     - name: Install dependencies
+  #       run: npm install
 
-      - name: Build Electron app for Windows
-        run: npm run make:win
+  #     - name: Build Electron app for Windows
+  #       run: npm run make:win
 
-      - name: Release to GitHub
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          files: |
-            D:/a/electronX/electronX/out/make/squirrel.windows/x64/*.exe
-          tag_name: Releases
-          repository: usersuyashpandey/Release
+  #     - name: Release to GitHub
+  #       uses: softprops/action-gh-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+  #       with:
+  #         files: |
+  #           D:/a/electronX/electronX/out/make/squirrel.windows/x64/*.exe
+  #         tag_name: Releases
+  #         repository: usersuyashpandey/Release
 
-  build-macos:
-    runs-on: macos-latest
-    permissions:
-      contents: write
-      discussions: write
-    needs: configure-git
+  # build-macos:
+  #   runs-on: macos-latest
+  #   permissions:
+  #     contents: write
+  #     discussions: write
+  #   needs: configure-git
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20.x
+  #     - name: Set up Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20.x
 
-      - name: Install setuptools
-        run: |
-          python3 -m pip install setuptools
-          npm ci
+  #     - name: Install setuptools
+  #       run: |
+  #         python3 -m pip install setuptools
+  #         npm ci
 
-      - name: Pull latest changes
-        run: git pull origin main
+  #     - name: Pull latest changes
+  #       run: git pull origin main
 
-      - name: Install dependencies
-        run: npm install
+  #     - name: Install dependencies
+  #       run: npm install
 
-      - name: Build Electron app for macOS
-        run: npm run make:mac
+  #     - name: Build Electron app for macOS
+  #       run: npm run make:mac
 
-      - name: Release to GitHub
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-        with:
-          files: |
-            /Users/runner/work/electronX/electronX/out/make/*.dmg
-          tag_name: Releases
-          repository: usersuyashpandey/Release
+  #     - name: Release to GitHub
+  #       uses: softprops/action-gh-release@v1
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+  #       with:
+  #         files: |
+  #           /Users/runner/work/electronX/electronX/out/make/*.dmg
+  #         tag_name: Releases
+  #         repository: usersuyashpandey/Release
