@@ -15,15 +15,31 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure Git user and bump version
+      - name: Configure Git user
         run: |
           git config --global user.email "suyashpandey152@gmail.com"
           git config --global user.name "usersuyashpandey"
-          npm version patch -m "Automatic version bump to %s [skip ci]"
-          echo "${version}"
-          git push origin HEAD:main --tags
+
+      - name: Extract version
+        id: version
+        run: |
+          OLD_VERSION=$(npm show . version)
+          NEW_VERSION=$(node -p 'require("./package.json").version')
+          if [ "$NEW_VERSION" != "$OLD_VERSION" ]; then
+            echo "New version $NEW_VERSION detected"
+            echo "version=$NEW_VERSION" >> $GITHUB_ENV
+          else
+            echo "Version $OLD_VERSION hasn't changed, skipping the release"
+            echo "version=" >> $GITHUB_ENV
+          fi
+
+      - name: Create a git tag
+        if: env.NEW_VERSION
+        run: |
+          git tag v${NEW_VERSION}
+          git push --tags
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NEW_VERSION: ${{ env.NEW_VERSION }}
 
       - name: Merge version bump commit
         run: |
@@ -49,27 +65,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Extract version
-        id: version
-        run: |
-          OLD_VERSION=$(npm show . version)
-          NEW_VERSION=$(node -p 'require("./package.json").version')
-          if [ $NEW_VERSION != $OLD_VERSION ]; then
-            echo "New version $NEW_VERSION detected"
-            echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
-            git log "$OLD_VERSION"..HEAD
-          else
-            echo "Version $OLD_VERSION hasn't changed, skipping the release"
-          fi
-
-      - name: Create a git tag
-        if: ${{ steps.version.outputs.version }}
-        run: git tag $NEW_VERSION && git push --tags
-        env:
-          NEW_VERSION: ${{ steps.version.outputs.version }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -92,7 +87,7 @@ jobs:
         with:
           files: |
             D:/a/electronX/electronX/out/make/squirrel.windows/x64/*.exe
-          tag_name: ${{ steps.version.outputs.version }}
+          tag_name: Releases
           repository: usersuyashpandey/Release
 
   build-macos:
@@ -105,25 +100,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Extract version
-        id: version
-        run: |
-          OLD_VERSION=$(npm show . version)
-          NEW_VERSION=$(node -p 'require("./package.json").version')
-          if [ $NEW_VERSION != $OLD_VERSION ]; then
-            echo "New version $NEW_VERSION detected"
-            echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
-            git log "$OLD_VERSION"..HEAD
-          else
-            echo "Version $OLD_VERSION hasn't changed, skipping the release"
-          fi
-
-      - name: Create a git tag
-        if: ${{ steps.version.outputs.version }}
-        run: git tag $NEW_VERSION && git push --tags
-        env:
-          NEW_VERSION: ${{ steps.version.outputs.version }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -151,5 +127,5 @@ jobs:
         with:
           files: |
             /Users/runner/work/electronX/electronX/out/make/*.dmg
-            tag_name: ${{ steps.version.outputs.version }}
+          tag_name: Releases
           repository: usersuyashpandey/Release
