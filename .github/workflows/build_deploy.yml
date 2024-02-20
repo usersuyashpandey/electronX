@@ -29,6 +29,7 @@ jobs:
         id: version
         run: |
           NEW_VERSION=$(node -p 'require("./package.json").version')
+          echo "New version $NEW_VERSION detected"
           echo "version=$NEW_VERSION" >> $GITHUB_ENV
 
       - name: Merge version bump commit
